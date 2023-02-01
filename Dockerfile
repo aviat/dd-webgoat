@@ -15,6 +15,7 @@ EXPOSE 8000
 
 ENTRYPOINT [ \
    "java", \
+   "-javaagent:dd-java-agent.jar", \
    "-Duser.home=/jars", \
    "-Dfile.encoding=UTF-8", \
    "--add-opens", "java.base/java.lang=ALL-UNNAMED", \
@@ -29,5 +30,12 @@ ENTRYPOINT [ \
    "-Drunning.in.docker=true", \
    "-Dserver.address=0.0.0.0", \
    "-Dserver.port=8000", \
-   "-jar", "webgoat.jar", \
-   "-javaagent", "dd-java-agent.jar" ]
+   "-Ddd.agent.host=datadog-agent", \
+   "-Ddd.env=production", \
+   "-Ddd.service=webgoat", \
+   "-Ddd.trace.sample.rate=1", \
+   "-Ddd.profiling.enabled=true", \
+   "-Ddd.appsec.enabled=true", \
+   "-Ddd.instrumentation.telemetry.enabled=true", \
+   "-jar", "webgoat.jar" \
+   ]
